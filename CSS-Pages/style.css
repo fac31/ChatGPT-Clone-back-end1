@@ -1,18 +1,57 @@
  /* Some basic styling for demonstration purposes */
- #container {
-    margin: 50px auto;
-    width: 50%;
-    border: 1px solid #ccc;
-    padding: 20px;
-    border-radius: 2%;
 
+ #container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Distributes space between items */
+  height: 100vh; /* Full viewport height */
+  padding-bottom: 10px; /* Optional: Adds some space at the bottom */
+}
+
+#display-area {
+  flex-grow: 1; /* Allows the display area to grow and fill available space */
+  overflow-y: auto; /* Adds scroll if content exceeds available space */
+  margin-bottom: 10px; /* Separation space between display area and input text */
+  padding: 10px; /* Padding inside the display area */
+  background: #f0f0f0; /* Optional: Background color for visual separation */
+}
+
+.input-text {
+  display: flex;
+  align-items: center;
+  background: #ffffff; /* Background color for input area */
+  padding: 10px;
+}
+
+
+  
+#input-text {
+    width: calc(100% - 50px); /* Take up the full width minus the button width */
+    margin-right: 10px; /* Add some space between the textarea and the button */
   }
 
-  textarea {
+
+button {
+    width: 40px; /* Set a fixed width for the button */
+    height: 40px; /* Set a fixed height for the button */
+    border: none; /* Remove default border */
+    background: none; /* Remove default background */
+    cursor: pointer; /* Change cursor to pointer to indicate it's clickable */
+  }
+  
+button img {
+    width: 100%; /* Make the image fill the button */
+    height: auto; /* Maintain aspect ratio */
+  }
+
+  
+
+textarea {
     width: 100%;
     height: 100px;
     margin-bottom: 10px;
   }
+
   #display-area {
     border: 1px solid #ccc;
     padding: 10px;
@@ -54,6 +93,8 @@ h2 {
   color: #74AA9C;
 }
 
+
+
 /* CONTAINER */
 
 
@@ -77,7 +118,6 @@ h2 {
 
   }
 
-  / Style for buttons /
 button {
   padding: 10px 20px;
   background-color: #007bff;

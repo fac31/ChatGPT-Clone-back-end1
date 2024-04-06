@@ -4,7 +4,10 @@
     width: 50%;
     border: 1px solid #ccc;
     padding: 20px;
+    border-radius: 2%;
+
   }
+
   textarea {
     width: 100%;
     height: 100px;
@@ -18,3 +21,78 @@
   .hidden {
     display: none;
   }
+
+  /* --------------- */
+  /* HEADER */
+/* --------------- */
+
+
+  .header-style {
+    display: flex; /* Use flexbox for layout */
+    justify-content: center; /* Center flex items on the main axis (horizontally) */
+    align-items: center; /* Center flex items on the cross axis (vertically) */
+    margin-top: 20px;
+  }
+  
+  h1 {
+    margin: 0; /* Remove default margin to align properly with the image */
+    font-size: 2em; /* Adjust based on your design needs */
+    white-space: nowrap; /* Prevents the text from wrapping */
+    font-family: sans-serif;
+    color: #74AA9C;
+  }
+  
+  .img-style {
+    height: auto; /* Maintain aspect ratio */
+    width: auto; /* Allow width to adjust based on height */
+    max-height: 2em; /* Match the h1 font size to align their heights */
+    margin-left: 20px; /* Add some space between the h1 and the image */
+  }
+  
+h2 {
+  font-family: sans-serif;
+  color: #74AA9C;
+}
+
+/* CONTAINER */
+
+
+/* --------------- */
+/* INPUT TEXT AREA */
+/* --------------- */
+
+.input-text {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 100px;
+}
+
+
+
+
+/* Chatbot section */
+
+  h2 {
+
+  }
+
+  / Style for buttons /
+button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 5px;
+}
+
+button:hover {
+  background-color: #74AA9C;
+}
+
+
+
+
+

@@ -1,80 +1,75 @@
-// Declare apiKey variable outside of functions
-var secureKey = '';
+// Global variable to store the API key
+let globalApiKey = '';
 
-// JavaScript function to capture form data and display it on the page
+// JavaScript function to store API key in a global variable
+function storeAPIKey() {
+    // Get the value entered in the input field
+    var apiKey = document.getElementById('api-key-input').value;
+
+    // Store the API key in the global variable
+    globalApiKey = apiKey;
+
+    // Optionally, log to the console for verification (remove in production)
+    console.log("API Key stored successfully");
+
+    // Hide the API key input field and submit button for security reasons
+    document.getElementById('api-key-input').style.display = 'none';
+    document.querySelector('button[onclick="storeAPIKey()"]').style.display = 'none';
+}
+
+// Function to capture form data and send it to the OpenAI API
 function displayText() {
     // Get the text from the textarea
     var text = document.getElementById('input-text').value;
 
-    // Get the display area element
-    var displayArea = document.getElementById('display-area');
-
-    // Set the text content of the display area to the captured text
-    displayArea.textContent = text;
+    // Check if API Key is stored
+    if (!globalApiKey) {
+        alert("API Key is missing. Please store the API Key first.");
+        return;
+    }
 
     // Send the captured text to the OpenAI API
     sendRequest(text);
 }
 
-// JavaScript function to store API key in a local variable
-function storeAPIKey() {
-    // Get the value entered in the input field
-   var apiKey = document.getElementById('api-key-input').value;
-
-    // Store the API key securely in a local variable
-   secureKey = apiKey;
-
-    // For demonstration purposes, you can log the stored API key to the console
-    console.log("API Key stored:", secureKey);
-
-    // You can now use the stored API key in your application
-    // For production use, never store sensitive data like API keys in client-side code
-
-    // Hide the API key input field and submit button
-    document.getElementById('api-key-input').style.display = 'none';
-    document.querySelector('button[onclick="storeAPIKey()"]').style.display = 'none';
-}
-
-// JavaScript function to send request to OpenAI API
+// Function to send request to the OpenAI API
 function sendRequest(text) {
-    // Get the API key stored in a local variable (replace 'your-api-key' with your actual API key)
-  
-// For demonstration purposes, you can log the stored API key to the console
-console.log("API Key stored:", secureKey);
+    // Use the globally stored API key
+    var apiKey = globalApiKey;
 
     // Construct the request data
     var requestData = {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + secureKey
-
-            //put console log
+            'Authorization': 'Bearer ' + apiKey
         },
         body: JSON.stringify({
-            prompt: text,
-            max_tokens: 150
+            model: "gpt-3.5-turbo", // Ensure you're using the correct model for your use case
+            messages: [{role: "user", content: text}]
         })
     };
 
-
-    // Send the request to OpenAI API
+    // Send the request to the OpenAI API
     fetch('https://api.openai.com/v1/chat/completions', requestData)
         .then(function(response) {
-            // Check if response is successful
             if (!response.ok) {
-                throw new Error('Network response was not ok');
+                throw new Error('Network response was not ok. Status:', response.status);
             }
-            // Parse response as JSON
             return response.json();
         })
         .then(function(data) {
-            // Display the response in the response area
+            // Display the API response
             var displayArea = document.getElementById('display-area');
-            displayArea.textContent = JSON.stringify(data, null, 2);
+            // Assuming you want to display the text of the first completion
+            if (data.choices && data.choices.length > 0) {
+                displayArea.textContent = data.choices[0].message.content;
+            } else {
+                displayArea.textContent = "No response from API.";
+            }
         })
         .catch(function(error) {
-            // Handle any errors
             console.error('There was a problem with the fetch operation:', error);
+            document.getElementById('display-area').textContent = error.message;
         });
 }

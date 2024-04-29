@@ -8,14 +8,33 @@
   <script src="../js-Pages/script.js" async></script>
 </head>
 <body>
+<header>
+  <div class="header-style">
+    <h1>Our Chat GPT Clone</h1>
+    <img src="../images/logo-black.png" class="img-style">  
+  </div>
+</header>
+
 
 <div id="container">
+
   <input type="password" id="api-key-input" placeholder="Enter your API key...">
   <button onclick="storeAPIKey()">Submit</button>
   
-  <textarea id="input-text" placeholder="Enter your text here..."></textarea>
-  <button onclick="displayText()">Submit</button>
+  <h2 class="h2-style">Text Area</h2>
+
+
   <div id="display-area"></div>
+
+  <div class="input-text">
+    <textarea id="input-text" placeholder="Enter your text here..."></textarea>
+
+    <button onclick="displayText()">
+      <img src="../images/arrow-up-solid.svg">
+    </button>
+    
+  </div>
+
 </div>
 
 

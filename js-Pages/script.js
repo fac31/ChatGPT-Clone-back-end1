@@ -1,8 +1,11 @@
 // Global variable to store the API key
 let globalApiKey = '';
 
+let testConnected = 0;
+
 // JavaScript function to store API key in a global variable
 function storeAPIKey() {
+   
     // Get the value entered in the input field
     var apiKey = document.getElementById('api-key-input').value;
 
@@ -12,9 +15,10 @@ function storeAPIKey() {
     // Optionally, log to the console for verification (remove in production)
     console.log("API Key stored successfully");
 
-    // Hide the API key input field and submit button for security reasons
-    document.getElementById('api-key-input').style.display = 'none';
-    document.querySelector('button[onclick="storeAPIKey()"]').style.display = 'none';
+    //clear text inout display
+
+
+   
 }
 
 // Function to capture form data and send it to the OpenAI API
@@ -53,8 +57,8 @@ function sendRequest(text) {
     // Send the request to the OpenAI API
     fetch('https://api.openai.com/v1/chat/completions', requestData)
     .then(function(response) {
-        if (!response.ok) {
-            throw new Error('Network response was not ok. Status:', response.status);
+             if (!response.ok) {
+       throw new Error('Network response was not ok. Re-enter correct API key.', response.status);      
         }
         return response.json(); // This parses the JSON body of the response
     })
@@ -70,13 +74,30 @@ function sendRequest(text) {
 
             // Set the text content of the display area to the generated text
             displayArea.textContent = generatedText; // Displaying the response directly
+            
         } else {
             // Handle case where response does not contain expected data
             document.getElementById('display-area').textContent = "No response or unexpected response structure.";
         }
-    })
+        console.log('API key successfuly connected.');    
+        testConnected = 1; //is connected. So remove API text dysplay.
+
+        if (testConnected == 1){
+
+     // Hide the API key input field and submit button for security reasons
+     document.getElementById('api-key-input').style.display = 'none';
+     document.querySelector('button[onclick="storeAPIKey()"]').style.display = 'none';
+
+        }
+    } )
     .catch(function(error) {
         console.error('There was a problem with the fetch operation:', error);
         document.getElementById('display-area').textContent = error.message;
+    
+        // Clear the input field upon error
+        document.getElementById('api-key-input').value = "";
     });
+    
+    
 }
+

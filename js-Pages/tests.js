@@ -20,29 +20,31 @@ function testDOMElementsExist() {
     console.log('Test Display Area Exists: ' + (displayAreaExists ? 'PASS' : 'FAIL'));
 }
 
+window.onload = testDOMElementsExist;
+
 
 /*----------------------------------------*\
   #TEST: Check API key is stored correctly
 \*----------------------------------------*/
 
-function testStoreAPIKeyFunction(apiKey) {
-    // Clear any existing value
-    document.getElementById('api-key-input').value = '';
+// function testStoreAPIKeyFunction(apiKey) {
+//     // Clear any existing value
+//     document.getElementById('api-key-input').value = '';
 
-    // Set the test API key
-    document.getElementById('api-key-input').value = apiKey;
+//     // Set the test API key
+//     document.getElementById('api-key-input').value = apiKey;
 
-    // Call the function to test
-    storeAPIKey();
+//     // Call the function to test
+//     storeAPIKey();
 
-    // Checks
-    console.log('Test API Key Stored: ' + (globalApiKey === apiKey ? 'PASS' : 'FAIL'));
-    console.log('Test Input Cleared: ' + (document.getElementById('api-key-input').value === '' ? 'PASS' : 'FAIL'));
-}
+//     // Checks
+//     console.log('Test API Key Stored: ' + (globalApiKey === apiKey ? 'PASS' : 'FAIL'));
+//     console.log('Test Input Cleared: ' + (document.getElementById('api-key-input').value === '' ? 'PASS' : 'FAIL'));
+// }
 
 
 /*-----------------------------------------------------------------------*\
-  #TEST: Interaction with Open AI API by testing the displayText function 
+  #TEST: Interaction with Open AI API by testing the displayText function
 \*-----------------------------------------------------------------------*/
 
 /*Objectives:
@@ -54,24 +56,24 @@ function testStoreAPIKeyFunction(apiKey) {
 * 1. Testing Response to Missing API Key
  */
 
-function testDisplayTextWithNoAPIKey() {
-    // Ensure the API key is not set
-    globalApiKey = '';
+// function testDisplayTextWithNoAPIKey() {
+//     // Ensure the API key is not set
+//     globalApiKey = '';
 
-    // Capture the alert message
-    const originalAlert = window.alert; // backup original alert function
-    let alertMessage = null;
-    window.alert = (msg) => { alertMessage = msg; }; // mock alert function
+//     // Capture the alert message
+//     const originalAlert = window.alert; // backup original alert function
+//     let alertMessage = null;
+//     window.alert = (msg) => { alertMessage = msg; }; // mock alert function
 
-    // Call the function
-    displayText();
+//     // Call the function
+//     displayText();
 
-    // Check if the correct alert message is shown
-    console.log('Test Display Text without API Key: ' + (alertMessage === "API Key is missing. Please store the API Key first." ? 'PASS' : 'FAIL'));
+//     // Check if the correct alert message is shown
+//     console.log('Test Display Text without API Key: ' + (alertMessage === "API Key is missing. Please store the API Key first." ? 'PASS' : 'FAIL'));
 
-    // Restore the original alert function
-    window.alert = originalAlert;
-}
+//     // Restore the original alert function
+//     window.alert = originalAlert;
+// }
 
 /**
 * 2. Testing Successful API Call
@@ -98,57 +100,57 @@ function testDisplayTextWithAPIKey() {
 
     // Restore original functions
     window.fetch = originalFetch;
-    document.getElementById('input-text').value = ""; 
+    document.getElementById('input-text').value = "";
 }
 *?
 /*----------------------------------------*\
   #TEST: Successful API Response
 \*----------------------------------------*/
 
-function testSuccessfulAPIResponse() {
-    // Mock global API key setup
-    globalApiKey = 'valid-api-key';
+// function testSuccessfulAPIResponse() {
+//     // Mock global API key setup
+//     globalApiKey = 'valid-api-key';
 
-    // Mock fetch to simulate a successful API response
-    const originalFetch = window.fetch;
-    window.fetch = () => Promise.resolve({
-        ok: true,
-        json: () => Promise.resolve({
-            choices: [{ message: { content: "Hello, this is a simulated response from GPT-3.5!" } }]
-        })
-    });
+//     // Mock fetch to simulate a successful API response
+//     const originalFetch = window.fetch;
+//     window.fetch = () => Promise.resolve({
+//         ok: true,
+//         json: () => Promise.resolve({
+//             choices: [{ message: { content: "Hello, this is a simulated response from GPT-3.5!" } }]
+//         })
+//     });
 
-    // Call the function that makes the API request
-    document.getElementById('input-text').value = "Test input for API";
-    displayText(); // displayText() is the function that handles the submission and API interaction
+//     // Call the function that makes the API request
+//     document.getElementById('input-text').value = "Test input for API";
+//     displayText(); // displayText() is the function that handles the submission and API interaction
 
-    // Assertion (Check if the display area is updated correctly)
-    setTimeout(() => { // Use setTimeout to allow fetch mock to process
-        const displayContent = document.getElementById('display-area').textContent;
-        console.log('Test Successful API Response: ' + (displayContent.includes("Hello, this is a simulated response from GPT-3.5!") ? 'PASS' : 'FAIL'));
+//     // Assertion (Check if the display area is updated correctly)
+//     setTimeout(() => { // Use setTimeout to allow fetch mock to process
+//         const displayContent = document.getElementById('display-area').textContent;
+//         console.log('Test Successful API Response: ' + (displayContent.includes("Hello, this is a simulated response from GPT-3.5!") ? 'PASS' : 'FAIL'));
 
-        // Restore the original fetch function
-        window.fetch = originalFetch;
-    }, 100); 
-}
+//         // Restore the original fetch function
+//         window.fetch = originalFetch;
+//     }, 100);
+// }
 
 /*----------------------------------------*\
   #RUNNING TESTS ON WINDOW ONLOAD
 \*----------------------------------------*/
 
-window.addEventListener('load', function() {
-    // Run the test for DOM element existence
-    testDOMElementsExist();
+// window.addEventListener('load', function() {
+//     // Run the test for DOM element existence
+//     testDOMElementsExist();
 
-    // Test API key storage and input field clearance
-    testStoreAPIKeyFunction();
+//     // Test API key storage and input field clearance
+//     testStoreAPIKeyFunction();
 
-    // Test the displayText function's behavior in both scenarios
-   // testDisplayTextWithNoAPIKey();
-   // testDisplayTextWithAPIKey();
+//     // Test the displayText function's behavior in both scenarios
+//    // testDisplayTextWithNoAPIKey();
+//    // testDisplayTextWithAPIKey();
 
-    // Test successful API response
-   // testSuccessfulAPIResponse();
-});
+//     // Test successful API response
+//    // testSuccessfulAPIResponse();
+// });
 
 

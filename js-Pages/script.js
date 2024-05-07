@@ -12,11 +12,6 @@ function storeAPIKey() {
     // Store the API key in the global variable
     globalApiKey = apiKey;
 
-    // Optionally, log to the console for verification (remove in production)
-    console.log("API Key stored successfully");
-
-    //clear text inout display
-
 }
 
 // Function to capture form data and send it to the OpenAI API

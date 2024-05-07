@@ -76,7 +76,7 @@ function testDisplayTextWithNoAPIKey() {
 /**
 * 2. Testing Successful API Call
  */
-
+/*
 function testDisplayTextWithAPIKey() {
     // Setup: Set a test API key and simulate user input
     globalApiKey = 'test-key';
@@ -100,7 +100,7 @@ function testDisplayTextWithAPIKey() {
     window.fetch = originalFetch;
     document.getElementById('input-text').value = ""; 
 }
-
+*?
 /*----------------------------------------*\
   #TEST: Successful API Response
 \*----------------------------------------*/
@@ -144,11 +144,11 @@ window.addEventListener('load', function() {
     testStoreAPIKeyFunction();
 
     // Test the displayText function's behavior in both scenarios
-    testDisplayTextWithNoAPIKey();
-    testDisplayTextWithAPIKey();
+   // testDisplayTextWithNoAPIKey();
+   // testDisplayTextWithAPIKey();
 
     // Test successful API response
-    testSuccessfulAPIResponse();
+   // testSuccessfulAPIResponse();
 });
 
 

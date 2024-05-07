@@ -29,7 +29,7 @@ window.onload = testDOMElementsExist;
 
 
 function testAPIKeyStorage(apiKey) {
-  // Check if the API key input is empty
+  // Check if the API key input is empty.
   if (apiKey === '') {
       console.log('API Key Input is Empty: FAIL');
   } else {

@@ -101,6 +101,36 @@ function testDisplayTextWithAPIKey() {
     document.getElementById('input-text').value = ""; 
 }
 
+/*----------------------------------------*\
+  #TEST: Successful API Response
+\*----------------------------------------*/
+
+function testSuccessfulAPIResponse() {
+    // Mock global API key setup
+    globalApiKey = 'valid-api-key';
+
+    // Mock fetch to simulate a successful API response
+    const originalFetch = window.fetch;
+    window.fetch = () => Promise.resolve({
+        ok: true,
+        json: () => Promise.resolve({
+            choices: [{ message: { content: "Hello, this is a simulated response from GPT-3.5!" } }]
+        })
+    });
+
+    // Call the function that makes the API request
+    document.getElementById('input-text').value = "Test input for API";
+    displayText(); // displayText() is the function that handles the submission and API interaction
+
+    // Assertion (Check if the display area is updated correctly)
+    setTimeout(() => { // Use setTimeout to allow fetch mock to process
+        const displayContent = document.getElementById('display-area').textContent;
+        console.log('Test Successful API Response: ' + (displayContent.includes("Hello, this is a simulated response from GPT-3.5!") ? 'PASS' : 'FAIL'));
+
+        // Restore the original fetch function
+        window.fetch = originalFetch;
+    }, 100); 
+}
 
 /*----------------------------------------*\
   #RUNNING TESTS ON WINDOW ONLOAD
@@ -116,6 +146,9 @@ window.addEventListener('load', function() {
     // Test the displayText function's behavior in both scenarios
     testDisplayTextWithNoAPIKey();
     testDisplayTextWithAPIKey();
+
+    // Test successful API response
+    testSuccessfulAPIResponse();
 });
 
 

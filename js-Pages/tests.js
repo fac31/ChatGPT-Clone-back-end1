@@ -27,20 +27,22 @@ window.onload = testDOMElementsExist;
   #TEST: Check API key is stored correctly
 \*----------------------------------------*/
 
-// function testStoreAPIKeyFunction(apiKey) {
-//     // Clear any existing value
-//     document.getElementById('api-key-input').value = '';
 
-//     // Set the test API key
-//     document.getElementById('api-key-input').value = apiKey;
+function testAPIKeyStorage(apiKey) {
+  // Check if the API key input is empty.
+  if (apiKey === '') {
+      console.log('API Key Input is Empty: FAIL');
+  } else {
+      console.log('API Key Input is Not Empty: PASS');
 
-//     // Call the function to test
-//     storeAPIKey();
-
-//     // Checks
-//     console.log('Test API Key Stored: ' + (globalApiKey === apiKey ? 'PASS' : 'FAIL'));
-//     console.log('Test Input Cleared: ' + (document.getElementById('api-key-input').value === '' ? 'PASS' : 'FAIL'));
-// }
+      // Since the input is not empty, check if it matches the global API key stored
+      if (globalApiKey === apiKey) {
+          console.log('API Key correctly stored: PASS');
+      } else {
+          console.log('API Key incorrectly stored: FAIL');
+      }
+  }
+}
 
 
 /*-----------------------------------------------------------------------*\

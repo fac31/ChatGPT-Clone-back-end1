@@ -12,6 +12,9 @@ function storeAPIKey() {
     // Store the API key in the global variable
     globalApiKey = apiKey;
 
+    // You can now run a test check right after storing
+    testAPIKeyStorage(apiKey);
+
 }
 
 // Function to capture form data and send it to the OpenAI API

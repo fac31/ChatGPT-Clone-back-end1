@@ -3,7 +3,7 @@ let globalApiKey = '';
 
 let testConnected = 0;
 
-// JavaScript function to store API key in a global variable
+// JavaScript function to store API key in a global variable.
 function storeAPIKey() {
 
     // Get the value entered in the input field

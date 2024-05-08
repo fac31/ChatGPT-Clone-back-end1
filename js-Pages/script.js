@@ -3,7 +3,7 @@ let globalApiKey = '';
 
 let testConnected = 0;
 
-// JavaScript function to store API key in a global variable
+// JavaScript function to store API key in a global variable.
 function storeAPIKey() {
 
     // Get the value entered in the input field
@@ -12,10 +12,8 @@ function storeAPIKey() {
     // Store the API key in the global variable
     globalApiKey = apiKey;
 
-    // Optionally, log to the console for verification (remove in production)
-    console.log("API Key stored successfully");
-
-    //clear text inout display
+    // You can now run a test check right after storing
+    testAPIKeyStorage(apiKey);
 
 }
 

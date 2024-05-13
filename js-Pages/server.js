@@ -26,7 +26,7 @@ app.post('/api/send', async (req, res) => {
     const requestData = {
         method: 'POST',
         headers: {
-            'Authorization': Bearer ${apiKey},
+            'Authorization': `Bearer ${apiKey}`,
             'Content-Type': 'application/json'
         },
         body: JSON.stringify(req.body)
@@ -45,5 +45,5 @@ app.post('/api/send', async (req, res) => {
 // Define the port and start the server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-    console.log(Server running on port ${PORT});
+    console.log(`Server running on port ${PORT}`);
 });

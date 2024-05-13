@@ -1,21 +1,42 @@
-// Global variable to store the API key
-let globalApiKey = '';
+function verifyAPIKey() {
+    fetch('/api/verifykey', { // Endpoint to verify the API key
+        method: 'GET'
+    })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                console.log('API key verification successful.');
+                document.getElementById('api-key-input').style.display = 'none'; // Hide input on success
+            } else {
+                alert("API Key is missing or invalid. Please contact support.");
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert("Error verifying API key.");
+        });
+}
+
+
+
+// // Global variable to store the API key
+// let globalApiKey = '';
 
 let testConnected = 0;
 
-// JavaScript function to store API key in a global variable.
-function storeAPIKey() {
+// // JavaScript function to store API key in a global variable.
+// function storeAPIKey() {
 
-    // Get the value entered in the input field
-    var apiKey = document.getElementById('api-key-input').value;
+//     // Get the value entered in the input field
+//     var apiKey = document.getElementById('api-key-input').value;
 
-    // Store the API key in the global variable
-    globalApiKey = apiKey;
+//     // Store the API key in the global variable
+//     globalApiKey = apiKey;
 
-    // You can now run a test check right after storing
-    testAPIKeyStorage(apiKey);
+//     // You can now run a test check right after storing
+//     testAPIKeyStorage(apiKey);
 
-}
+// }
 
 // Function to capture form data and send it to the OpenAI API
 function displayText() {
@@ -25,27 +46,27 @@ function displayText() {
     // Clear the text area upon inputting the form data 
     document.getElementById('input-text').value = "";
 
-    // Check if API Key is stored
-    if (!globalApiKey) {
-        alert("API Key is missing. Please store the API Key first.");
-        return;
-    }
-
-    // Send the captured text to the OpenAI API
-    sendRequest(text);
+    // Verify API Key before sending text to the OpenAI API
+    verifyAPIKey().then(isValid => {
+        if (isValid) {
+            sendRequest(text);
+        } else {
+            alert("API Key is missing. Please store the API Key first.");
+        }
+    });
 }
+
+
+
+
 
 // Function to send request to the OpenAI API
 function sendRequest(text) {
-    // Use the globally stored API key
-    var apiKey = globalApiKey;
-
-    // Construct the request data
+    // Request setup is the same minus the API key, which is handled server-side
     var requestData = {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + apiKey
         },
         body: JSON.stringify({
             model: "gpt-3.5-turbo", // Ensure you're using the correct model for your use case
@@ -92,9 +113,6 @@ function sendRequest(text) {
         .catch(function (error) {
             console.error('There was a problem with the fetch operation:', error);
             document.getElementById('display-area').textContent = error.message;
-
-            // Clear the input field upon error
-            document.getElementById('api-key-input').value = "";
         });
 
 

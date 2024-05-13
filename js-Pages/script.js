@@ -1,5 +1,36 @@
 // Global variable to indicate if the API key is connected
 let testConnected = 0;
+let verifyPromise = null; // Global promise for API key verification
+
+// Function to verify the API key with the server
+function verifyAPIKey() {
+    if (!verifyPromise) {
+        verifyPromise = fetch('/api/verifykey', { method: 'GET' })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.success) {
+                    console.log('API key verification successful.');
+                    testConnected = 1; // Mark as connected
+                    return true;
+                } else {
+                    console.error("API Key is missing or invalid.");
+                    alert("API Key is missing or invalid. Please contact support.");
+                    return false;
+                }
+            })
+            .catch(error => {
+                console.error('Error verifying API key:', error);
+                alert("Error verifying API key. Please check the console for more details.");
+                return false;
+            });
+    }
+    return verifyPromise;
+}
 
 // Function to handle response from fetch call
 function handleResponse(response) {
@@ -28,36 +59,18 @@ function handleError(error) {
     document.getElementById('display-area').textContent = error.message;
 }
 
-// Function to verify the API key with the server
-function verifyAPIKey() {
-    fetch('/api/verifykey', { // Assumes an endpoint that checks if the API key is valid
-        method: 'GET'
-    })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                console.log('API key verification successful.');
-                testConnected = 1; // Mark as connected
-            } else {
-                alert("API Key is missing or invalid. Please contact support.");
-            }
-        })
-        .catch(error => {
-            console.error('Error verifying API key:', error);
-            alert("Error verifying API key.");
-        });
-}
-
 // Function to capture form data and send it to the server for API interaction
 function displayText() {
     var text = document.getElementById('input-text').value;
     document.getElementById('input-text').value = ""; // Clear the text area upon inputting the form data
 
-    if (testConnected) {
-        sendRequest(text);
-    } else {
-        alert("API Key is missing. Please verify the API Key first.");
-    }
+    verifyAPIKey().then(verified => {
+        if (verified && testConnected) {
+            sendRequest(text);
+        } else {
+            alert("API Key is missing. Please verify the API Key first.");
+        }
+    });
 }
 
 // Function to send request to the OpenAI API via server

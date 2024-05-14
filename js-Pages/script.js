@@ -89,7 +89,7 @@ function sendRequest(text) {
         })
     };
 
-    fetch('http://localhost:3000/api/send', requestData)
+    fetch('http://localhost:3000/api/send', requestData) // this is the second to send the information to the openAI API 
         .then(handleResponse)
         .then(processData)
         .catch(handleError);

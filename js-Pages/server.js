@@ -1,20 +1,24 @@
 // Import necessary modules
 import express from 'express';
 import fetch from 'node-fetch';
+import cors from 'cors';
 import dotenv from 'dotenv';
 
 dotenv.config(); // Load environment variables from .env file
 
 // Initialize express app
 const app = express();
+app.use(cors()); // Use CORS middleware to allow cross-origin requests
 app.use(express.json()); // Middleware to parse JSON bodies
 
 // Route to verify the API key
 app.get('/api/verifykey', (req, res) => {
-    // Check if an API key exists in the environment variables and is not empty
+    console.log('Received request for API key verification');
     if (process.env.API_KEY && process.env.API_KEY.trim() !== '') {
+        console.log('API Key is set');
         res.json({ success: true });
     } else {
+        console.log('API Key is missing');
         res.json({ success: false });
     }
 });

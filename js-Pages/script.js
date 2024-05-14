@@ -5,7 +5,7 @@ let verifyPromise = null; // Global promise for API key verification
 // Function to verify the API key with the server
 function verifyAPIKey() {
     if (!verifyPromise) {
-        verifyPromise = fetch('/api/verifykey', { method: 'GET' })
+        verifyPromise = fetch('http://localhost:3000/api/verifykey', { method: 'GET' })
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
@@ -35,6 +35,9 @@ function verifyAPIKey() {
 // Function to handle response from fetch call
 function handleResponse(response) {
     if (!response.ok) {
+        response.json().then(json => {
+            console.error('Response Error:', json);  // Log or handle JSON error message from the server
+        });
         throw new Error('Network response was not ok', response.status);
     }
     return response.json();
@@ -86,7 +89,7 @@ function sendRequest(text) {
         })
     };
 
-    fetch('https://api.openai.com/v1/chat/completions', requestData)
+    fetch('http://localhost:3000/api/send', requestData)
         .then(handleResponse)
         .then(processData)
         .catch(handleError);

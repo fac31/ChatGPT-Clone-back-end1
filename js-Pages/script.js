@@ -89,7 +89,7 @@ function sendRequest(text) {
         })
     };
 
-    fetch('http://localhost:3000/api/send', requestData)
+    fetch('http://localhost:3000/api/send', requestData) // this is a route 
         .then(handleResponse)
         .then(processData)
         .catch(handleError);

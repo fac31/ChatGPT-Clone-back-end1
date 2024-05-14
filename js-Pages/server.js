@@ -6,8 +6,8 @@ import dotenv from 'dotenv';
 
 dotenv.config(); // Load environment variables from .env file
 
-// Initialize express app
-const app = express();
+
+const app = express(); // Initialize express app
 app.use(cors()); // Use CORS middleware to allow cross-origin requests
 app.use(express.json()); // Middleware to parse JSON bodies
 
